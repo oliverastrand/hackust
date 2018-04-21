@@ -16,8 +16,11 @@ def get_dist_and_duration(geolocator, gmaps, start, end, getText):
     # destinations = []
     #orig_text = '25 lower kent ridge road'
     #dest_text = 'Changi airport'
+    print("HERE")
     location_orig = geolocator.geocode(start)
+    print(location_orig)
     location_dest = geolocator.geocode(end)
+    print(location_dest)
 
     # string with start/end coordinates (x, y)
     orig_coordinates_text = location_orig.raw['lat'] + ', ' + location_orig.raw['lon']

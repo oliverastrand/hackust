@@ -21,7 +21,43 @@
         <h1 style="color:white" align="center">Hong Kong</h1>
     </div>
     -->
-    <h1 style="color:white" align="center">Hong Kong</h1>
+
+    <h1 style="color:white" align="center">{{ city }}</h1>
+    {% for event in events %}
+        {% if event.type == "attraction" %}
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-0 pl-1 pb-0 active border-secondary pr-3" style="background-color:#1C1A23">
+                <div class="d-flex w-100">
+                    <img src="{% static 'ubertravel/images/victoria-peak.jpg' %}" style="width: 75px; height: 80px"/>
+                    <div class="mr-auto p-2">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ event.name }}</h5>
+                            <small class="mt-1">{{ event.time }}</small>
+                        </div>
+                        <p class="mb-0">{{ event.description }}</p>
+                    </div>
+                </div>
+            </a>
+        {% endif %}
+        {% if event.type == "restaurant" %}
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-0 pl-1 pb-0 active border-secondary pr-3" style="background-color:#1C1A23">
+               <div class="d-flex w-100">
+                    <img src="{% static 'ubertravel/images/McDonalds.jpg' %}" style="width: 75px; height: 65px"/>
+                    <div class="mr-auto p-2">
+                        <div class="d-flex w-100 justify-content-around mb-1">
+                            <h5 class="mb-1">Lunch: {{ event.name }}</h5>
+                            <small class="mt-1">{{ event.time }}</small>
+                        </div>
+                        <div class="d-flex w-100 justify-content-around">
+                            <h6 class="">{{ event.price }}</h6>
+                            <h6 class="">{{ event.rating }}/5</h6>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        {% endif %}
+    {% endfor %}
+
+    <!--
     <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-0 pl-1 pb-0 active border-secondary pr-3" style="background-color:#1C1A23">
         <div class="d-flex w-100">
             <img src="{% static 'ubertravel/images/victoria-peak.jpg' %}" style="width: 75px; height: 80px"/>
@@ -54,19 +90,6 @@
                 </div>
             </div>
         </div>
-
-        <!--
-       <div class="d-flex w-100 justify-content-around">
-           <div class="row">
-               <div class="col">
-                    <p>McDonalds</p>
-                    <small>Test</small>
-               </div>
-           </div>
-           <p>Canteen</p>
-           <p>Chi's</p>
-        </div>
-        -->
     </a>
     <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active bt-2 border-secondary pb-1 pt-2 pr-4" style="background-color:#3B3845">
         <div class="d-flex w-100 justify-content-between">
@@ -86,15 +109,14 @@
             </div>
         </div>
     </a>
-
-    <div class="text-center" style="bottom: 0">
-        <form method="POST" action="{% url 'ubertravel:itinerary' %}">
-            <button type="submit" class="btn btn-light mt-3">Start Trip!</button>
-        </form>
-    </div>
-
+    -->
 </div>
-
+<div class="text-center" style="bottom: 0">
+    <form method="post" action="{% url 'ubertravel:itinerary' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-light mt-3">Start Trip!</button>
+    </form>
+</div>
 </body>
 
 <!--JS Stuff-->
