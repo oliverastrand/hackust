@@ -9,7 +9,7 @@ class CityForm(forms.Form):
 def itinerary_form_generator(events):
 
     class ItineraryForm(forms.Form):
-
+        pass
 
 
 
