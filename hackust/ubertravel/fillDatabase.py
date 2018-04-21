@@ -2,7 +2,7 @@ from .models import Attraction, AttractionTag, Restaurant, TravelTime
 
 from geopy.geocoders import Nominatim
 import googlemaps
-from GoogleMapsAPI import get_dist_and_duration
+from .GoogleMapsAPI import get_dist_and_duration
 import json
 
 

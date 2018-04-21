@@ -8,6 +8,10 @@ from django.contrib.auth.models import Permission, User
 from django import forms
 import json
 
+from .fillDatabase import addAttractions
+from .fillDatabase import addRestaurants
+from .fillDatabase import addTravelTimes
+
 from .testfunctions import get_itinerary
 from .forms import CityForm, itinerary_form_generator, ItineraryForm
 
@@ -125,8 +129,11 @@ def itinerary(request):
 
 def index_view(request):
     context_dict = {}
-    return render(request, 'ubertravel/index.html', context_dict)
 
+    addRestaurants("/home/maxi/Documents/Development/HackathonHKUST/hackust/hackust/ubertravel/CityData/Hong Kong_restaurants.json")
+    addAttractions("/home/maxi/Documents/Development/HackathonHKUST/hackust/hackust/ubertravel/CityData/Hong Kong_attractions.json")
+    addTravelTimes("Hong Kong")
+    return render(request, 'ubertravel/index.html', context_dict)
 
 def detail(request):
     context_dict = {}
