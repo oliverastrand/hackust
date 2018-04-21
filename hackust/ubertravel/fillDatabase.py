@@ -64,7 +64,7 @@ def addRestaurants(restaurantsJson):
         # description = restaurants_data[key]["description"]
         duration = restaurants_data[key]["duration"]
         price = restaurants_data[key]["price"]
-        cuisine = 'Italian'     # restaurants_data[key]["cuisine"]
+        cuisine = restaurants_data[key]["cuisine"]
         newRestaurant = Restaurant(name=name, city=city, address=address, rating=rating,
                                    duration=duration, price=price, cuisine=cuisine)
         newRestaurant.save()
