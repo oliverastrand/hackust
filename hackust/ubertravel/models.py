@@ -2,16 +2,16 @@ from django.db import models
 
 
 class City(models.Model):
-    name = models.TextField(max_length=200)
-    description = models.TextField(max_length=20000)
+    name = models.TextField(max_length=200, unique=True)
+    description = models.TextField(max_length=20000, null=True)
 
 
 # Superclass for attractions and restaurants
 class Event(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
 
     city = models.ForeignKey(City, on_delete=models.CASCADE)
-    address = models.CharField(max_length=200)
+    address = models.CharField(max_length=200, unique=True)
     rating = models.IntegerField(default=0)
     description = models.CharField(max_length=2000)
     type = models.CharField(max_length=200)

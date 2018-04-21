@@ -9,6 +9,8 @@ from django import forms, template
 import json
 from .models import Attraction, Restaurant
 
+from .fillDatabase import addAttractions, addRestaurants, addTravelTimes, add_cities
+
 from .testfunctions import get_itinerary
 from .forms import CityForm
 
@@ -139,6 +141,11 @@ def itinerary(request):
 
 def index_view(request):
     context_dict = {}
+
+    # add_cities("/home/svilen/NUS/Hackathon/HKUST_18/hackust/DestinationCityData/Hong Kong_attractions.json")
+    # addRestaurants("/home/svilen/NUS/Hackathon/HKUST_18/hackust/DestinationCityData/Hong Kong_restaurants.json")
+    # addAttractions("/home/svilen/NUS/Hackathon/HKUST_18/hackust/DestinationCityData/Hong Kong_attractions.json")
+    # addTravelTimes("Hong Kong")
     return render(request, 'ubertravel/index.html', context_dict)
 
 # Returns an event object with a given name from session

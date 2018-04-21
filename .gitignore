@@ -1,5 +1,7 @@
 .idea/*
 hackust/__pycache__/
+hackust/db.sqlite3
+hackust/hackust/db.sqlite3
 hackust/ubertravel/__pychache__/
 hackust/ubertravel/__pychache__/*
 hackust/hackust/__pychache__/
