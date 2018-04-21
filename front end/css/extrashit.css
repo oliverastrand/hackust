@@ -1,0 +1,37 @@
+@font-face{
+  font-family: Arkhip;
+  src: url("fonts/Arkhip_font.ttf")
+}
+
+body {
+    font-family: Arkhip;
+    font-weight: normal;
+    font-style: normal;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    /*background-color:black*/
+    background-image: url("backgrounds/bg.jpeg");
+    background-position: 22% 25%;
+  }
+  
+  .navbar {
+    margin-bottom: 20px;
+    /*box-shadow: 0px 2px 10px #c0c0c8;*/
+  }
+
+  .navbar-toggler {
+    border: white;
+    border-radius: 0%;
+  }
+
+  .form-group.centered {
+    border-radius: 0%;
+    font-size: 16px; 
+    position: relative;
+    top: 50%;
+    transform:translatey(250%);
+  }
+
+  .btn-dark {
+    background-color: black;
+  }
