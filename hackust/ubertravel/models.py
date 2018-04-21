@@ -26,7 +26,7 @@ class Restaurant(models.Model):
     address = models.CharField(max_length=200)
     rating = models.IntegerField(default=0)
     description = models.CharField(max_length=500)
-    cuisine = models.CharField(max_length=200)  # Western or local
+    cuisine = models.CharField(max_length=200)  # E.g. western or local
 
     def __str__(self):
         return self.name
@@ -36,21 +36,7 @@ class TravelTime(models.Model):
     start_address = models.CharField(max_length=200)
     end_address = models.CharField(max_length=200)
     duration = models.TimeField()
-    length = models.IntegerField()
+    distance = models.IntegerField()
 
     def __str__(self):
         return self.start_address + " - " + self.end_address + ": " + self.duration
-
-'''
-
-# Create your models here.
-class Question(models.Model):
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField("date published")
-
-    def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
-
-    def __str__(self):
-        return self.question_text
-'''

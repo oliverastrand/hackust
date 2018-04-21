@@ -1,16 +1,10 @@
-import googlemaps
 from datetime import datetime, timedelta
-from geopy import geocoders
 
-from geopy.geocoders import Nominatim
-geolocator = Nominatim()
-
-gmaps = googlemaps.Client(key='AIzaSyBKtJT8Le-Gh3FxX9Gc-21lEW4otPK-DYo')
-
-
-def get_dist_and_duration(start, end):
+def get_dist_and_duration(geolocator, gmaps, start, end):
     """
     Get the distance and duration
+    :param geolocator: used to convert address to coordinates
+    :param gmaps: used for gmaps retrieving
     :param start: string of the start point (address) of journey
     :param end: string of the end point (address) of journey
     :return: tuple of distance, duration string pair
@@ -18,10 +12,10 @@ def get_dist_and_duration(start, end):
     now = datetime.now()
     # origins = []
     # destinations = []
-    orig_text = '25 lower kent ridge road'
-    dest_text = 'Changi airport'
-    location_orig = geolocator.geocode(orig_text)
-    location_dest = geolocator.geocode(dest_text)
+    #orig_text = '25 lower kent ridge road'
+    #dest_text = 'Changi airport'
+    location_orig = geolocator.geocode(start)
+    location_dest = geolocator.geocode(end)
 
     # string with start/end coordinates (x, y)
     orig_coordinates_text = location_orig.raw['lat'] + ', ' + location_orig.raw['lon']
