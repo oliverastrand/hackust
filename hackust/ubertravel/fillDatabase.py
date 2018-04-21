@@ -35,7 +35,7 @@ def addAttractions(attractionsJson):
         name = attractions_data[key]["name"]
         city = attractions_data[key]["city"]
         address = attractions_data[key]["address"]
-        rating = attractions_data[key]["rating"]
+        rating = attractions_data[key]["rating"] * attractions_data[key]["reviews"]
         description = attractions_data[key]["description"]
         newAttraction = Attraction(name=name, city=city, address=address, rating=rating,
                                    description=description)
@@ -56,7 +56,7 @@ def addRestaurants(restaurantsJson):
         name = restaurants_data[key]["name"]
         city = restaurants_data[key]["city"]
         address = restaurants_data[key]["address"]
-        rating = restaurants_data[key]["rating"]
+        rating = restaurants_data[key]["rating"] * restaurants_data[key]["reviews"]
         description = restaurants_data[key]["description"]
         cuisine = restaurants_data[key]["cuisine"]
         newRestaurant = Restaurant(name=name, city=city, address=address, rating=rating,
