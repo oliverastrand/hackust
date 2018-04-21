@@ -40,3 +40,14 @@ class TravelTime(models.Model):
 
     def __str__(self):
         return self.start_address + " - " + self.end_address + ": " + self.duration
+
+class TravelTimeValues(models.Model):
+    start_address = models.CharField(max_length=200)
+    end_address = models.CharField(max_length=200)
+    #duration is in Seconds
+    duration = models.IntegerField()
+    #distance is in Meters
+    distance = models.IntegerField()
+
+    def __str__(self):
+        return self.start_address + " - " + self.end_address + ": " + self.duration
