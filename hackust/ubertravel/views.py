@@ -99,6 +99,7 @@ def itinerary(request):
     elif request.method == 'POST':
         previous_events = request.session['events']
         previous_times = request.session["times"]
+        request.session["curr_event_index"] = 0
         #form_class = itinerary_form_generator(previous_events)
         #form = form_class(request.POST)
 
@@ -137,7 +138,7 @@ def itinerary(request):
         context_dict = {'city': city, 'form': form}
         return render(request, "ubertravel/itinerary.html", context_dict)
         '''
-        return HttpResponseRedirect(reverse("ubertravel:detail"), previous_events[0].name)
+        return HttpResponseRedirect(reverse("ubertravel:detail"))
 
 def index_view(request):
     context_dict = {}
@@ -149,13 +150,28 @@ def index_view(request):
     return render(request, 'ubertravel/index.html', context_dict)
 
 # Returns an event object with a given name from session
-def get_event(request, event_name):
+def get_event(request):
+    curr_event_index = request.session["curr_event_index"]
     all_events = request.session['events']
-    for event in all_events:
+    return all_events[curr_event_index]
+    '''
+    for i in range(len(all_events)):
+        event = all_events[i]
         if event.name == event_name:
+            request.session["curr_event_index"] = i
             return event
+    '''
 
-def detail(request, event_name):
-    event = get_event(request, event_name)
+def next_event(request):
+    request.session["curr_event_index"] += 1
+    return HttpResponseRedirect(reverse("ubertravel:detail"))
 
-    return render(request, 'ubertravel/detail.html')
+def prev_event(request):
+    curr_index = request.session["curr_event_index"]
+    if curr_index > 0:
+        request.session["curr_event_index"] -= 1
+    return HttpResponseRedirect(reverse("ubertravel:detail"))
+
+def detail(request):
+    event = get_event(request)
+    return render(request, 'ubertravel/detail.html', {"event": event})
