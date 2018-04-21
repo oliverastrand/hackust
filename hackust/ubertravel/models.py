@@ -38,7 +38,6 @@ class AttractionTag(models.Model):
     def __str__(self):
         return self.attraction + ": " + self.attraction_tag
 
-
 # Restaurants
 class Restaurant(Event):
     price = models.IntegerField(default=20)
@@ -47,15 +46,14 @@ class Restaurant(Event):
     def __str__(self):
         return self.name
 
-
 # Travel times between different addresses
 class TravelTime(models.Model):
-    lat = models.ForeignKey('Event', related_name='lat', on_delete=models.CASCADE)
-    long = models.ForeignKey('Event', on_delete=models.CASCADE)
+    start_name = models.CharField(max_length=200)
+    end_name = models.CharField(max_length=200)
 
     duration = models.IntegerField()
     distance = models.IntegerField()
 
     def __str__(self):
-        return self.lat + " - " + self.long + ": " + self.duration
+        return self.start_name + " - " + self.end_name + ": " + self.duration
 
