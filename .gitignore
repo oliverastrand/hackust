@@ -1,3 +1,7 @@
 .idea/*
-hackust/__pycache__/*
-
+hackust/__pycache__/
+hackust/ubertravel/__pychache__/
+hackust/ubertravel/__pychache__/*
+hackust/hackust/__pychache__/
+hackust/hackust/__pychache__/*
+hackust/ubertravel/migrations/__pycache__/
