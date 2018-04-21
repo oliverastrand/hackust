@@ -9,7 +9,7 @@ from django import forms
 import json
 
 from .testfunctions import get_itinerary
-from .forms import CityForm
+from .forms import CityForm, itinerary_form_generator, ItineraryForm
 
 # Imports for registering users from
 
@@ -69,11 +69,46 @@ def itinerary(request):
     except:
         return HttpResponseRedirect(reverse("ubertravel:choose_city"))
 
-    events, times = get_itinerary(city)
+    context_dict = {}
+    if request.method == 'GET':
+
+        events, times = get_itinerary(city, [], [])
+        #form_class = itinerary_form_generator(events)
+        #form = form_class()
+
+        form = ItineraryForm(events=events)
+
+        request.session['events'] = events
+
+        context_dict = {'city': city, 'form': form}
+        return render(request, "ubertravel/itinerary.html", context_dict)
 
 
-    context_dict = {'city': city}
-    return render(request, "ubertravel/itinerary.html", context_dict)
+    elif request.method == 'POST':
+        previous_events = request.session['events']
+        #form_class = itinerary_form_generator(previous_events)
+        #form = form_class(request.POST)
+
+        form = ItineraryForm(request.POST, events=previous_events)
+
+        if form.is_valid():
+            form_data = form.cleaned_data
+
+            liked_events = []
+            disliked_events = []
+
+            for event in previous_events:
+                if form_data[event.name] == "Like":
+                    liked_events.append(event)
+                elif form_data[event.name] == "Dislike":
+                    disliked_events.append(event)
+
+            events, times = get_itinerary(city, excluded_attractions=disliked_events, mandatory_attractions=liked_events)
+            form = ItineraryForm(events=events)
+            print(form_data)
+
+        context_dict = {'city': city, 'form': form}
+        return render(request, "ubertravel/itinerary.html", context_dict)
 
 
 def index_view(request):
