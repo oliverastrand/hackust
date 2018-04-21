@@ -36,7 +36,7 @@ class AttractionTag(models.Model):
 
 # Restaurants
 class Restaurant(Event):
-
+    price = models.IntegerField(default=20)
     cuisine = models.CharField(max_length=200)  # E.g. western or local
 
     def __str__(self):
