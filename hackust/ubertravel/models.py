@@ -3,7 +3,7 @@ from django.db import models
 
 class City(models.Model):
     name = models.TextField(max_length=200)
-    description = models.TextField(max_length=20000)
+    description = models.TextField(max_length=20000, null=True)
 
 
 # Superclass for attractions and restaurants

@@ -1,4 +1,4 @@
-from .models import Attraction, AttractionTag, Restaurant, TravelTime
+from .models import Attraction, AttractionTag, Restaurant, TravelTime, City
 
 from geopy.geocoders import Nominatim
 import googlemaps
@@ -36,7 +36,7 @@ def addAttractions(attractionsJson):
 
     for key in attractions_data:
         name = attractions_data[key]["name"]
-        city = attractions_data[key]["city"]
+        city = City(attractions_data[key]["city"])
         address = attractions_data[key]["address"]
         rating = attractions_data[key]["rating"] * attractions_data[key]["reviews"]
         duration = attractions_data[key]["duration"]
@@ -58,7 +58,7 @@ def addRestaurants(restaurantsJson):
 
     for key in restaurants_data:
         name = restaurants_data[key]["name"]
-        city = restaurants_data[key]["city"]
+        city = City(restaurants_data[key]["city"])
         address = restaurants_data[key]["address"]
         rating = restaurants_data[key]["rating"] * restaurants_data[key]["reviews"]
         # description = restaurants_data[key]["description"]
