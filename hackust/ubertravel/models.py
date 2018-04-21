@@ -14,9 +14,12 @@ class Event(models.Model):
     address = models.CharField(max_length=200)
     rating = models.IntegerField(default=0)
     description = models.CharField(max_length=2000)
+    type = models.CharField(max_length=200)
 
     duration = models.IntegerField()
 
+    def __str__(self):
+        return self.name
 
 # Attractions to visit
 class Attraction(Event):

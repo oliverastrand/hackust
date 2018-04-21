@@ -5,11 +5,12 @@ from django.views import generic, View
 from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Permission, User
-from django import forms
+from django import forms, template
 import json
+from .models import Attraction, Restaurant
 
 from .testfunctions import get_itinerary
-from .forms import CityForm, itinerary_form_generator, ItineraryForm
+from .forms import CityForm
 
 # Imports for registering users from
 
@@ -74,24 +75,34 @@ def itinerary(request):
     if request.method == 'GET':
 
         events, times = get_itinerary(city, [], [])
+        for i in range(len(events)):
+            events[i].time = times[i]
+
+
         #form_class = itinerary_form_generator(events)
         #form = form_class()
 
-        form = ItineraryForm(events=events)
+        #form = ItineraryForm(events=events, times=times)
 
         request.session['events'] = events
         request.session['liked_events'] = []
         request.session['disliked_events'] = []
-        context_dict = {'city': city, 'form': form}
-        return render(request, "ubertravel/itinerary.html", context_dict)
+        request.session["times"] = times
+
+        #context_dict = {'city': city, 'form': form}
+        #return render(request, "ubertravel/itinerary.html", context_dict)
+        return render(request, "ubertravel/itinerary.html", {"events": events, "times": times, "city": city})
 
 
     elif request.method == 'POST':
         previous_events = request.session['events']
+        previous_times = request.session["times"]
         #form_class = itinerary_form_generator(previous_events)
         #form = form_class(request.POST)
 
-        form = ItineraryForm(request.POST, events=previous_events)
+
+        '''
+        form = ItineraryForm(request.POST, events=previous_events, times=previous_times)
 
         if form.is_valid():
             form_data = form.cleaned_data
@@ -112,22 +123,32 @@ def itinerary(request):
                 elif form_data[event.name] == "Dislike":
                     disliked_events.append(event)
 
+            events, times = get_itinerary(city, excluded_attractions=disliked_events, mandatory_attractions=liked_events)
+
+            request.session["times"] = times
             request.session['liked_events'] = liked_events
             request.session['disliked_events'] = disliked_events
 
-            events, times = get_itinerary(city, excluded_attractions=disliked_events, mandatory_attractions=liked_events)
-            form = ItineraryForm(events=events)
+            form = ItineraryForm(events=events, times=times)
             print(form_data)
 
         context_dict = {'city': city, 'form': form}
         return render(request, "ubertravel/itinerary.html", context_dict)
-
+        '''
+        return HttpResponseRedirect(reverse("ubertravel:detail"), previous_events[0].name)
 
 def index_view(request):
     context_dict = {}
     return render(request, 'ubertravel/index.html', context_dict)
 
+# Returns an event object with a given name from session
+def get_event(request, event_name):
+    all_events = request.session['events']
+    for event in all_events:
+        if event.name == event_name:
+            return event
 
-def detail(request):
-    context_dict = {}
-    return render(request, 'ubertravel/detail.html', context_dict)
+def detail(request, event_name):
+    event = get_event(request, event_name)
+
+    return render(request, 'ubertravel/detail.html')
