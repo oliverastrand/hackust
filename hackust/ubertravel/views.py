@@ -16,7 +16,6 @@ from .forms import CityForm, itinerary_form_generator, ItineraryForm
 from django.core.mail import send_mail
 
 
-
 def login_user(request):
     #question = get_object_or_404(Question, pk=question_id)
 
@@ -37,6 +36,7 @@ def login_user(request):
         return render(request, "registration/login.html", {
             'error_message': "Could not find user",
         })
+
 
 def home(request):
     return render(request, "ubertravel/home.html")
@@ -61,6 +61,7 @@ def choose_city(request):
     form = CityForm()
     context_dict['form'] = form
     return render(request, "ubertravel/choose_city.html", context_dict)
+
 
 def itinerary(request):
     try:
@@ -125,3 +126,8 @@ def itinerary(request):
 def index_view(request):
     context_dict = {}
     return render(request, 'ubertravel/index.html', context_dict)
+
+
+def detail(request):
+    context_dict = {}
+    return render(request, 'ubertravel/detail.html', context_dict)

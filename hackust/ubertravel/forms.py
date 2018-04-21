@@ -2,9 +2,8 @@ from django import forms
 from .models import Event
 
 class CityForm(forms.Form):
-
-    city = forms.CharField(label="City", max_length=50, required=True)
-
+    city = forms.CharField(label="", max_length=50, required=True,
+                           widget=forms.TextInput(attrs={'placeholder': 'City to explore...'}))
 
 def itinerary_form_generator(events):
     EVENT_CHOICES = (

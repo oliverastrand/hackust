@@ -13,5 +13,6 @@ urlpatterns = [
     path('index/', views.index_view, name='index'),
     path('choose_city/', views.choose_city, name='choose_city'),
     path('itinerary/', views.itinerary, name='itinerary'),
+    path('detail/', views.detail, name='detail'),
     #path('settings/', login_required(views.settings), name='settings'),
 ]
