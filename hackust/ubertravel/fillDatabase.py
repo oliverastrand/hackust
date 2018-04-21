@@ -21,7 +21,7 @@ def addTravelTimes(city):
     gmaps = googlemaps.Client(key='AIzaSyBKtJT8Le-Gh3FxX9Gc-21lEW4otPK-DYo')
     for i in range(0, len(addresses)):
         for j in range(i+1, len(addresses)):  # From i+1 to avoid fetching the same data multiple times
-            dist_text, duration_text = get_dist_and_duration(geolocator, gmaps, addresses[i], addresses[j])
+            dist_text, duration_text = get_dist_and_duration(geolocator, gmaps, addresses[i], addresses[j], True)
             newTravelTime = TravelTime(start_address=addresses[i], end_address=addresses[j],
                                        duration=duration_text, distance=dist_text)
             newTravelTime.save()  # Saves to database
