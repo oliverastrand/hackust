@@ -5,9 +5,9 @@ import googlemaps
 from GoogleMapsAPI import get_dist_and_duration
 import json
 
+
 # Adds travel times between all addresses that currently are in the database for a specific city
 def addTravelTimes(city):
-
     # Retrieves all addresses of the attractions and restaurants
     addresses = []
     attractions = Attraction.objects.filter(city=city)
@@ -39,8 +39,9 @@ def addAttractions(attractionsJson):
         city = attractions_data[key]["city"]
         address = attractions_data[key]["address"]
         rating = attractions_data[key]["rating"] * attractions_data[key]["reviews"]
+        duration = attractions_data[key]["duration"]
         description = attractions_data[key]["description"]
-        newAttraction = Attraction(name=name, city=city, address=address, rating=rating,
+        newAttraction = Attraction(name=name, city=city, address=address, rating=rating, duration=duration,
                                    description=description)
         newAttraction.save()
 
@@ -60,8 +61,10 @@ def addRestaurants(restaurantsJson):
         city = restaurants_data[key]["city"]
         address = restaurants_data[key]["address"]
         rating = restaurants_data[key]["rating"] * restaurants_data[key]["reviews"]
-        description = restaurants_data[key]["description"]
+        # description = restaurants_data[key]["description"]
+        duration = restaurants_data[key]["duration"]
+        price = restaurants_data[key]["price"]
         cuisine = restaurants_data[key]["cuisine"]
         newRestaurant = Restaurant(name=name, city=city, address=address, rating=rating,
-                                   description=description, cuisine=cuisine)
+                                   duration=duration, price=price, cuisine=cuisine)
         newRestaurant.save()

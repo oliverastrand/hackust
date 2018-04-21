@@ -79,7 +79,8 @@ def itinerary(request):
         form = ItineraryForm(events=events)
 
         request.session['events'] = events
-
+        request.session['liked_events'] = []
+        request.session['disliked_events'] = []
         context_dict = {'city': city, 'form': form}
         return render(request, "ubertravel/itinerary.html", context_dict)
 
@@ -94,14 +95,24 @@ def itinerary(request):
         if form.is_valid():
             form_data = form.cleaned_data
 
-            liked_events = []
-            disliked_events = []
+            try:
+                liked_events = request.session['liked_events']
+            except:
+                liked_events = []
+
+            try:
+                disliked_events = request.session['disliked_events']
+            except:
+                disliked_events = []
 
             for event in previous_events:
                 if form_data[event.name] == "Like":
                     liked_events.append(event)
                 elif form_data[event.name] == "Dislike":
                     disliked_events.append(event)
+
+            request.session['liked_events'] = liked_events
+            request.session['disliked_events'] = disliked_events
 
             events, times = get_itinerary(city, excluded_attractions=disliked_events, mandatory_attractions=liked_events)
             form = ItineraryForm(events=events)

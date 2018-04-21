@@ -26,7 +26,7 @@ def is_int(s):
         return False
 
 
-def get_restaurant_attractions(city_name, number_attr):
+def get_city_restaurants(city_name, number_attr):
     """
     Get information about the best number_attr of restaurants in the city from Trip adviser
     :param city_name: The name of the city as a string where you want to look for restaurants
@@ -80,6 +80,8 @@ def get_restaurant_attractions(city_name, number_attr):
         rating = float(browser.find_elements_by_class_name('overallRating')[0].text)
         reviews = int(browser.find_elements_by_class_name('more')[0].text.split()[0].replace(',', ''))
         price_tag = browser.find_elements_by_xpath('//*[@id="taplc_location_detail_header_restaurants_0"]/div[2]/span[3]')[0].text
+        cuisine = browser.find_elements_by_xpath('//*[@id="taplc_location_detail_header_restaurants_0"]/div[2]/span[4]/a[1]')[0].text
+        print(cuisine)
         if '-' in price_tag:
             price_tag = price_tag.split(' - ')
             # takes the average of the estimated prices
@@ -97,6 +99,7 @@ def get_restaurant_attractions(city_name, number_attr):
         all_restaurants[key]["reviews"] = reviews
         all_restaurants[key]["duration"] = duration
         all_restaurants[key]["price"] = price_tag
+        all_restaurants[key]["cuisine"] = cuisine
         key += 1
         time.sleep(2)
         browser.back()
@@ -205,6 +208,6 @@ def get_city_attractions(city_name, number_attr):
     return all_attractions
 
 
-get_city_attractions('Hong Kong', 15)
-get_restaurant_attractions('Hong Kong', 15)
+# get_city_attractions('Hong Kong', 15)
+get_city_restaurants('Hong Kong', 15)
 

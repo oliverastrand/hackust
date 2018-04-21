@@ -18,12 +18,12 @@ class Event(models.Model):
     duration = models.IntegerField()
 
 
-
 # Attractions to visit
 class Attraction(Event):
 
     def __str__(self):
         return self.name
+
 
 # Types of attractions that are valid
 class AttractionTag(models.Model):
@@ -33,13 +33,15 @@ class AttractionTag(models.Model):
     def __str__(self):
         return self.attraction + ": " + self.attraction_tag
 
+
 # Restaurants
 class Restaurant(Event):
-
+    price = models.IntegerField(default=20)
     cuisine = models.CharField(max_length=200)  # E.g. western or local
 
     def __str__(self):
         return self.name
+
 
 # Travel times between different addresses
 class TravelTime(models.Model):
