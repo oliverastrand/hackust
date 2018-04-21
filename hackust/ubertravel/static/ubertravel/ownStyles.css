@@ -13,10 +13,23 @@ body {
     background-image: url("images/bg.jpeg");
     background-position: 22% 25%;
   }
+
+body.detail
+{
+  background-image: url("images/beach_dune.jpg");
+  background-size: auto;
+  background-position: 0% 75%;
+}
   
-  .navbar {
+  .navbar, {
     margin-bottom: 20px;
     /*box-shadow: 0px 2px 10px #c0c0c8;*/
+  }
+
+  .navbar a:link, .navbar a:active, .navbar a:hover, .navbar a:visited{
+    background-color: white;
+    color: black;
+    text-decoration: none;
   }
 
   .navbar-toggler {
@@ -26,12 +39,76 @@ body {
 
   .form-group.centered {
     border-radius: 0%;
-    font-size: 16px; 
+    font-size: 20px; 
     position: relative;
     top: 50%;
-    transform:translatey(250%);
+    transform:translatey(300%);
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: center;
   }
 
-  .btn-dark {
+  .btn-dark-submit {
     background-color: black;
+    border-radius: 0%;
+    color: white;
+    position: relative;
+    top: 9rem;
+  }
+
+  .previous, .previous:active, previous.visited, previous. {
+    background-color: white;
+    color: black;
+    text-decoration: none;
+  }
+
+  .next, .next:active, next.visited {
+    background-color: white;
+    color: black;
+  }
+
+  .card {
+    font-family: sans-serif;
+    color: white;
+    background-color: black;
+  }
+
+
+  .card-body a:link, .card-body a:active, .card-body a:hover, .card-body a:visited{
+    font-family: Arkhip;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+  }
+
+  .round {
+    border-radius: 50%;
+  }
+
+  .list-group-item {
+    color: white;
+    background-color: black;
+    font-style: italic;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    border-color: white;
+  }
+
+  .btn-nav {
+    text-align: center;
+  }
+
+  .btn-group {
+    border-radius: 0%;
+  }
+
+  .btn-light-nav {
+    border-color: black;
+    background-color: white;
+  }
+
+  .equalwidth {
+    width: 7rem !important;
   }
