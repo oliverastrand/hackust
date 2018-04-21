@@ -1,4 +1,5 @@
 from .models import Attraction, AttractionTag, Restaurant, TravelTime, TravelTimeValues
+
 from geopy.geocoders import Nominatim
 import googlemaps
 from GoogleMapsAPI import get_dist_and_duration
