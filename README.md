@@ -1,5 +1,5 @@
 # hackust
 
 # Install
-sudo pip3 install geopy
+sudo pip3 install geopy<br />
 sudo pip3 install googlemaps
