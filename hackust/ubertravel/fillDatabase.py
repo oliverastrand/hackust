@@ -2,6 +2,7 @@ from .models import Attraction, AttractionTag, Restaurant, TravelTime
 from geopy.geocoders import Nominatim
 import googlemaps
 from GoogleMapsAPI import get_dist_and_duration
+import json
 
 # Adds travel times between all addresses that currently are in the database for a specific city
 def addTravelTimes(city):
@@ -26,5 +27,38 @@ def addTravelTimes(city):
             newTravelTime.save()  # Saves to database
 
 # Adds all attractions from a json-file to the database
-#def addAttractions():
-#
+def addAttractions(attractionsJson):
+    json_data = open(attractionsJson).read()
+    attractions_data = json.loads(json_data)
+
+    for key in attractions_data:
+        name = attractions_data[key]["name"]
+        city = attractions_data[key]["city"]
+        address = attractions_data[key]["address"]
+        rating = attractions_data[key]["rating"]
+        description = attractions_data[key]["description"]
+        newAttraction = Attraction(name=name, city=city, address=address, rating=rating,
+                                   description=description)
+        newAttraction.save()
+
+        '''
+        # If we are adding attraction tags
+        tag = attractions_data[key]["tag"]
+        newAttraction.attractionTag_set.create(attractionTag=tag)
+        '''
+
+# Adds all restaurants from a json-file to the database
+def addRestaurants(restaurantsJson):
+    json_data = open(restaurantsJson).read()
+    restaurants_data = json.loads(json_data)
+
+    for key in restaurants_data:
+        name = restaurants_data[key]["name"]
+        city = restaurants_data[key]["city"]
+        address = restaurants_data[key]["address"]
+        rating = restaurants_data[key]["rating"]
+        description = restaurants_data[key]["description"]
+        cuisine = restaurants_data[key]["cuisine"]
+        newRestaurant = Restaurant(name=name, city=city, address=address, rating=rating,
+                                   description=description, cuisine=cuisine)
+        newRestaurant.save()
