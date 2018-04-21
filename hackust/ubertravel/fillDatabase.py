@@ -24,7 +24,7 @@ def addTravelTimes(city):
         for j in range(i+1, len(addresses)):  # From i+1 to avoid fetching the same data multiple times
             dist_text, duration_text = get_dist_and_duration(geolocator, gmaps, addresses[i], addresses[j], True)
             dist_val, duration_val = get_dist_and_duration(geolocator, gmaps, addresses[i], addresses[j], False)
-            newTravelTime = TravelTime(start_address=addresses[i], end_address=addresses[j],
+            newTravelTime = TravelTime(start_place=addresses[i], end_place=addresses[j],
                                        duration=duration_val, distance=dist_val)
             newTravelTime.save()  # Saves to database
 
