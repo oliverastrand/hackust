@@ -1,4 +1,4 @@
-from .models import Attraction, AttractionTag, Restaurant, TravelTime
+from .models import Attraction, AttractionTag, Restaurant, TravelTime, TravelTimeValues
 from geopy.geocoders import Nominatim
 import googlemaps
 from GoogleMapsAPI import get_dist_and_duration
@@ -22,9 +22,13 @@ def addTravelTimes(city):
     for i in range(0, len(addresses)):
         for j in range(i+1, len(addresses)):  # From i+1 to avoid fetching the same data multiple times
             dist_text, duration_text = get_dist_and_duration(geolocator, gmaps, addresses[i], addresses[j], True)
+            dist_val, duration_val = get_dist_and_duration(geolocator, gmaps, addresses[i], addresses[j], False)
             newTravelTime = TravelTime(start_address=addresses[i], end_address=addresses[j],
                                        duration=duration_text, distance=dist_text)
+            newTravelTimeVal = TravelTimeValues(start_address=addresses[i], end_address=addresses[j],
+                                       duration=duration_val, distance=dist_val)
             newTravelTime.save()  # Saves to database
+            newTravelTimeVal.save()
 
 # Adds all attractions from a json-file to the database
 def addAttractions(attractionsJson):
