@@ -1,8 +1,10 @@
 from django.db import models
 
+
 class City(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.TextField(max_length=200)
     description = models.TextField(max_length=20000)
+
 
 # Superclass for attractions and restaurants
 class Event(models.Model):
@@ -19,7 +21,6 @@ class Event(models.Model):
 
 # Attractions to visit
 class Attraction(Event):
-    name = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
@@ -34,7 +35,7 @@ class AttractionTag(models.Model):
 
 # Restaurants
 class Restaurant(Event):
-    name = models.CharField(max_length=200)
+
     cuisine = models.CharField(max_length=200)  # E.g. western or local
 
     def __str__(self):
@@ -42,8 +43,8 @@ class Restaurant(Event):
 
 # Travel times between different addresses
 class TravelTime(models.Model):
-    start_place = models.ForeignKey(Event, on_delete=models.CASCADE)
-    end_place = models.ForeignKey(Event, on_delete=models.CASCADE)
+    start_place = models.ForeignKey('Event', related_name='start_place', on_delete=models.CASCADE)
+    end_place = models.ForeignKey('Event', on_delete=models.CASCADE)
 
     duration = models.IntegerField()
     distance = models.IntegerField()
