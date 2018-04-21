@@ -10,5 +10,8 @@ urlpatterns = [
     path('login/', views.login_user, name='login'),
     path('logout/', views.logout_user, name='logout'),
     path('home/', login_required(views.home), name='home'),
+    path('index/', views.index_view, name='index'),
+    path('choose_city/', views.choose_city, name='choose_city'),
+    path('itinerary/', views.itinerary, name='itinerary'),
     #path('settings/', login_required(views.settings), name='settings'),
 ]

@@ -8,6 +8,7 @@ from django.contrib.auth.models import Permission, User
 from django import forms
 import json
 
+from .forms import CityForm
 
 # Imports for registering users from
 
@@ -43,3 +44,29 @@ def home(request):
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect(reverse("ubertravel:login_page"))
+
+
+def choose_city(request):
+    context_dict = {}
+    if request.method == 'POST':
+        form = CityForm(request.POST)
+        if form.is_valid():
+            form_data = form.cleaned_data
+            request.session['city'] = form_data['city']
+            context_dict['city'] = form_data['city']
+            return HttpResponseRedirect(reverse("ubertravel:itinerary"))
+
+
+    form = CityForm()
+    context_dict['form'] = form
+    return render(request, "ubertravel/choose_city.html", context_dict)
+
+def itinerary(request):
+    context_dict = {}
+    context_dict['city'] = request.session['city']
+    return render(request, "ubertravel/itinerary.html", context_dict)
+
+
+def index_view(request):
+    context_dict = {}
+    return render(request, 'ubertravel/index.html', context_dict)

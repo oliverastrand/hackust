@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Here you can choose a city</title>
+</head>
+<body>
+Please select your city!
+
+{% block content %}
+  <h3>Welcome</h3>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type='submit' value='submit'>
+  </form>
+{% endblock %}
+
+</body>
+</html>

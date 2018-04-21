@@ -1,0 +1,13 @@
+<div class="center">
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'ubertravel:login' %}" method="post">
+    {%csrf_token%}
+    <input type="text" name="username" placeholder="Username"/>
+    <input type="password" name="password" placeholder="Password"/><br>
+<br>
+<input type="submit" value="Login" />
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+</div>
