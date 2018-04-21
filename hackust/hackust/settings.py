@@ -99,6 +99,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGIN_URL = 'ubertravel:login_page'
+LOGIN_REDIRECT_URL = 'ubertravel:home'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
