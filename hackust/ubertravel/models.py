@@ -1,12 +1,25 @@
 from django.db import models
 
-# Attractions to visit
-class Attraction(models.Model):
+class City(models.Model):
     name = models.CharField(max_length=200)
-    city = models.CharField(max_length=200)
+    description = models.TextField(max_length=20000)
+
+# Superclass for attractions and restaurants
+class Event(models.Model):
+    name = models.CharField(max_length=200)
+
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
     address = models.CharField(max_length=200)
     rating = models.IntegerField(default=0)
     description = models.CharField(max_length=2000)
+
+    duration = models.IntegerField()
+
+
+
+# Attractions to visit
+class Attraction(Event):
+    name = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
@@ -20,12 +33,8 @@ class AttractionTag(models.Model):
         return self.attraction + ": " + self.attraction_tag
 
 # Restaurants
-class Restaurant(models.Model):
+class Restaurant(Event):
     name = models.CharField(max_length=200)
-    city = models.CharField(max_length=200)
-    address = models.CharField(max_length=200)
-    rating = models.IntegerField(default=0)
-    description = models.CharField(max_length=500)
     cuisine = models.CharField(max_length=200)  # E.g. western or local
 
     def __str__(self):
@@ -33,21 +42,12 @@ class Restaurant(models.Model):
 
 # Travel times between different addresses
 class TravelTime(models.Model):
-    start_address = models.CharField(max_length=200)
-    end_address = models.CharField(max_length=200)
-    duration = models.TimeField()
-    distance = models.IntegerField()
+    start_place = models.ForeignKey(Event, on_delete=models.CASCADE)
+    end_place = models.ForeignKey(Event, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.start_address + " - " + self.end_address + ": " + self.duration
-
-class TravelTimeValues(models.Model):
-    start_address = models.CharField(max_length=200)
-    end_address = models.CharField(max_length=200)
-    #duration is in Seconds
     duration = models.IntegerField()
-    #distance is in Meters
     distance = models.IntegerField()
 
     def __str__(self):
-        return self.start_address + " - " + self.end_address + ": " + self.duration
+        return self.start_place + " - " + self.end_place + ": " + self.duration
+
