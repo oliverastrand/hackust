@@ -12,6 +12,8 @@ class Event(models.Model):
 
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     address = models.CharField(max_length=200, unique=True)
+    lat = models.FloatField()
+    long = models.FloatField()
     rating = models.IntegerField(default=0)
     description = models.CharField(max_length=2000)
     type = models.CharField(max_length=200)
@@ -48,12 +50,12 @@ class Restaurant(Event):
 
 # Travel times between different addresses
 class TravelTime(models.Model):
-    start_place = models.ForeignKey('Event', related_name='start_place', on_delete=models.CASCADE)
-    end_place = models.ForeignKey('Event', on_delete=models.CASCADE)
+    lat = models.ForeignKey('Event', related_name='lat', on_delete=models.CASCADE)
+    long = models.ForeignKey('Event', on_delete=models.CASCADE)
 
     duration = models.IntegerField()
     distance = models.IntegerField()
 
     def __str__(self):
-        return self.start_place + " - " + self.end_place + ": " + self.duration
+        return self.lat + " - " + self.long + ": " + self.duration
 
