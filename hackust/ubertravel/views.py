@@ -8,6 +8,7 @@ from django.contrib.auth.models import Permission, User
 from django import forms
 import json
 
+from .testfunctions import get_itinerary
 from .forms import CityForm
 
 # Imports for registering users from
@@ -62,8 +63,16 @@ def choose_city(request):
     return render(request, "ubertravel/choose_city.html", context_dict)
 
 def itinerary(request):
-    context_dict = {}
-    context_dict['city'] = request.session['city']
+    try:
+        city = request.session['city']
+    # If city is not chosen redirect
+    except:
+        return HttpResponseRedirect(reverse("ubertravel:choose_city"))
+
+    events, times = get_itinerary(city)
+
+
+    context_dict = {'city': city}
     return render(request, "ubertravel/itinerary.html", context_dict)
 
 
