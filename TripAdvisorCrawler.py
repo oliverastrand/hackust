@@ -67,7 +67,7 @@ def get_city_restaurants(city_name, number_attr):
         except TimeoutException:
             print("Loading took too much time!")
         link = i.get_attribute("href")
-        if num_attr <= number_attr:
+        if num_attr < number_attr:
             num_attr += 1
             links.append(link)
 
