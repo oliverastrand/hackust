@@ -38,7 +38,7 @@
     </div>
 
     <div class="container centering">
-        <form action="{% url 'ubertravel:itinerary' %}" method="POST">
+        <form action="{% url 'ubertravel:choose_city' %}" method="POST">
             {% csrf_token %}
             <div class="form-group centered w-100" align="center">
                 {{ form }}
