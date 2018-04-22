@@ -10,8 +10,8 @@ body {
     padding-top: 20px;
     padding-bottom: 20px;
     /*background-color:black*/
-    background-image: url("images/bg.jpeg");
-    background-position: 22% 25%;
+    background-image: url("images/bg-cropped.jpg");
+    flex: 1;
   }
 
 body.detail
