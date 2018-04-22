@@ -15,23 +15,17 @@
 
 <body>
 <div class="list-group">
-    <!--
-    <div class="img-responsive mt-0" style="width: 200px; height: 70px">
-        <img src="{% static 'ubertravel/images/HK.jpg' %}"/>
-        <h1 style="color:white" align="center">Hong Kong</h1>
-    </div>
-    -->
 
     <h1 style="color:white" align="center">{{ city }}</h1>
     {% for event in events %}
         {% if event.type == "attraction" %}
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-0 pl-1 pb-0 active border-secondary pr-3" style="background-color:#1C1A23">
                 <div class="d-flex w-100">
-                    <img src="{% static 'ubertravel/images/victoria-peak.jpg' %}" style="width: 75px; height: 80px"/>
+                    <img src="{% static event.img %}" style="width: 75px; height: 80px"/>
                     <div class="mr-auto p-2">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">{{ event.name }}</h5>
-                            <small class="mt-1">{{ event.time }}</small>
+                            <small class="mt-1">{{ event.duration }}</small>
                         </div>
                         <p class="mb-0">{{ event.description }}</p>
                     </div>
@@ -41,80 +35,31 @@
         {% if event.type == "restaurant" %}
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-0 pl-1 pb-0 active border-secondary pr-3" style="background-color:#1C1A23">
                <div class="d-flex w-100">
-                    <img src="{% static 'ubertravel/images/McDonalds.jpg' %}" style="width: 75px; height: 65px"/>
+                    <img src="{% static event.img %}" style="width: 75px; height: 65px"/>
                     <div class="mr-auto p-2">
-                        <div class="d-flex w-100 justify-content-around mb-1">
+                        <div class="d-flex w-100 mb-1">
                             <h5 class="mb-1">Lunch: {{ event.name }}</h5>
-                            <small class="mt-1">{{ event.time }}</small>
                         </div>
                         <div class="d-flex w-100 justify-content-around">
-                            <h6 class="">{{ event.price }}</h6>
-                            <h6 class="">{{ event.rating }}/5</h6>
+                            <h6 class="mb-0">{{ event.description }}</h6>
                         </div>
                     </div>
                 </div>
             </a>
         {% endif %}
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active bt-2 border-secondary pb-1 pt-2 pr-4" style="background-color:#3B3845">
+            <div class="d-flex w-100 justify-content-between">
+                <p class="mb-1">Uber ride</p>
+                <small>{{ event.uber_time }} min</small>
+            </div>
+        </a>
     {% endfor %}
 
-    <!--
-    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-0 pl-1 pb-0 active border-secondary pr-3" style="background-color:#1C1A23">
-        <div class="d-flex w-100">
-            <img src="{% static 'ubertravel/images/victoria-peak.jpg' %}" style="width: 75px; height: 80px"/>
-            <div class="mr-auto p-2">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Victoria Peak</h5>
-                    <small class="mt-1">10:00</small>
-                </div>
-                <p class="mb-0">Victoria Peak is a .............. .... .... ....................................................</p>
-            </div>
-        </div>
-    </a>
-    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active bt-2 border-secondary pb-1 pt-2 pr-4" style="background-color:#3B3845">
-        <div class="d-flex w-100 justify-content-between">
-            <p class="mb-1">Uber ride</p>
-            <small>12:00</small>
-        </div>
-    </a>
-    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-0 pl-1 pb-0 active border-secondary pr-3" style="background-color:#1C1A23">
-       <div class="d-flex w-100">
-            <img src="{% static 'ubertravel/images/McDonalds.jpg' %}" style="width: 75px; height: 65px"/>
-            <div class="mr-auto p-2">
-                <div class="d-flex w-100 justify-content-around mb-1">
-                    <h5 class="mb-1">Lunch: McDonalds</h5>
-                    <small class="mt-1">12:20</small>
-                </div>
-                <div class="d-flex w-100 justify-content-around">
-                    <h6 class="">10$</h6>
-                    <h6 class="">4.8/5</h6>
-                </div>
-            </div>
-        </div>
-    </a>
-    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active bt-2 border-secondary pb-1 pt-2 pr-4" style="background-color:#3B3845">
-        <div class="d-flex w-100 justify-content-between">
-            <p class="mb-1">Uber ride</p>
-            <small>13:20</small>
-        </div>
-    </a>
-    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-0 pl-1 pb-0 active border-secondary pr-3" style="background-color:#1C1A23">
-        <div class="d-flex w-100">
-            <img src="{% static 'ubertravel/images/victoria-peak.jpg' %}" style="width: 75px; height: 80px"/>
-            <div class="mr-auto p-2">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Victoria Peak</h5>
-                    <small class="mt-1">13:35</small>
-                </div>
-                <p class="mb-0">Victoria Peak is a .............. .... .... ....................................................</p>
-            </div>
-        </div>
-    </a>
-    -->
 </div>
-<div class="text-center" style="bottom: 0">
+<div class="text-center container-fluid" style="bottom: 0">
     <form method="post" action="{% url 'ubertravel:itinerary' %}">
         {% csrf_token %}
-        <button type="submit" class="btn btn-light mt-3">Start Trip!</button>
+        <button type="submit" class="btn btn-lg btn-block btn-secondary mt-3" style="font-size: 20px"><strong>Start Trip!</strong></button>
     </form>
 </div>
 </body>

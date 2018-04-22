@@ -1,0 +1,18 @@
+from ubertravel.models import City
+from ubertravel.models import Restaurant
+from ubertravel.models import Attraction
+from ubertravel.models import TravelTime
+city = City(name="Hong Kong", description="The city of Hong Kong")
+city.save()
+a = Attraction(name="Victoria Peak", city=city, address="", lat=0, long=0, rating=100000, description="Very nice view over Hong Kong", type="attraction", duration="9:00", img="ubertravel/images/victoria-peak.jpg")
+a.save()
+a = Attraction(name="Tsz Shan", city=city, address="", lat=0, long=0, rating=90000, description="Renowned and beautiful temple", type="attraction", duration="11:00", img="ubertravel/images/Tsz-Shan-Monastery.jpg")
+a.save()
+r = Restaurant(name="Wong's", city=city, address="", lat=0, long=0, rating=90000, description="Local restaurant offering Chinese specialties", type="restaurant", duration="12:00", price=10, cuisine="local", img="ubertravel/images/Uma-Nota.jpg")
+r.save()
+a = Attraction(name="Big Buddha", city=city, address="", lat=0, long=0, rating=90000, description="Large Buddha in Asia!", type="attraction", duration="13:00", img="ubertravel/images/big-buddha.jpg")
+a.save()	
+a = Attraction(name="Chi Lin", city=city, address="", lat=0, long=0, rating=80000, description="One of the most beautiful nunnery's!", type="attraction", duration="14:30", img="ubertravel/images/Chi-Lin-Nunnery.jpg")
+a.save()
+a = Attraction(name="Nan Lian Garden", city=city, address="", lat=0, long=0, rating=70000, description="Natural and very beautiful park in Hong Kong", type="attraction", duration="15:30", img="ubertravel/images/Nan-Lian-Garden.jpg")
+a.save()

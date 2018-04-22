@@ -26,7 +26,7 @@
 
     <div class="card mx-auto" style="width: 92%">
         <!--Replace the image below with the one we scraped-->
-        <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/4/45/Kowloon_Masjid_and_Islamic_Centre_from_East_2.jpg" alt="Picture of [attraction]">
+        <img class="card-img-top" src="{% static event.img %}" alt="Picture of [attraction]" style="height:300">
         <div class="card-body">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="card-title mb-1"><strong>{{ event.name }}</strong></h5>
@@ -45,7 +45,7 @@
                             <button type="submit" class="btn btn-light-nav equalwidth">Next &#8250;</button>
                         </form>
                         </div>
-                      <button type="button" class="btn btn-secondary btn-lg btn-block pt-1" data-toggle="modal" data-target="#exampleModal"><strong>Start Trip!</strong></button>
+                      <button type="button" class="btn btn-secondary btn-lg btn-block pt-1" data-toggle="modal" data-target="#exampleModal"><strong>Get Uber</strong></button>
                     </div>
                 </div>
         </div>

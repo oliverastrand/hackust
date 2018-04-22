@@ -11,14 +11,15 @@ class Event(models.Model):
     name = models.CharField(max_length=200, unique=True)
 
     city = models.ForeignKey(City, on_delete=models.CASCADE)
-    address = models.CharField(max_length=200, unique=True)
+    address = models.CharField(max_length=200)
     lat = models.FloatField()
     long = models.FloatField()
     rating = models.IntegerField(default=0)
     description = models.CharField(max_length=2000)
     type = models.CharField(max_length=200)
+    img = models.CharField(max_length=200)
 
-    duration = models.IntegerField()
+    duration = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
