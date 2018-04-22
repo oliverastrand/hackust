@@ -11,41 +11,65 @@
     <link href="{% static 'ubertravel/ownStyles.css' %}" rel="stylesheet">
 
 
-    <title>TravelBois</title>
+    <title>Details</title>
 </head>
 
 <body class="detail">
         <div class="container-fluid">
                 <nav class="navbar navbar-light" style="background-color:	white">
-                        <a class="previous round" href="#"><strong>&#8249;</strong>back</a>
-                        <a class="navbar-brand" style="color:black" href="#">UBER|tourism</a>
+                    <form method="get" action="{% url 'ubertravel:itinerary' %}">
+                        <button type="submit" class="btn btn-secondary mt-3" href="#">Itinerary</button>
+                    </form>
+                        <a class="navbar-brand mt-0" style="color:black" href="#">UBER|tourism</a>
                 </nav>
         </div>
 
-    <br>
-        <div class="card mx-auto" style="width: 92%">
-            <!--Replace the image below with the one we scraped-->
-            <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/4/45/Kowloon_Masjid_and_Islamic_Centre_from_East_2.jpg" alt="Picture of [attraction]">
-            <div class="card-body">
-                <h5 class="card-title"><strong>[Attraction Name]</strong></h5>
-                <p class="card-text">[HH:MM to HH:MM]</p>
-                <p class="card-text">[Brief description of the attraction]<br>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua.</p>
-                          <div class="container-fluid text-center">
-                              <br>
-                              <div class="btn-group btn-group" role="group" aria-label="navigation">
-                                <button type="button" class="btn btn-light-nav equalwidth">&#8249; Previous</button>
-                                <button type="button" class="btn btn-light-nav equalwidth">Next &#8250;</button>
-                                </div>
-                                <br>
-                                <br>
-                                <button type="submit" class="btn btn-light btn-lg btn-block"><strong>Proceed with Itinerary</strong></button>
-                            </div>
-                        </div>
+    <div class="card mx-auto" style="width: 92%">
+        <!--Replace the image below with the one we scraped-->
+        <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/4/45/Kowloon_Masjid_and_Islamic_Centre_from_East_2.jpg" alt="Picture of [attraction]">
+        <div class="card-body">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="card-title mb-1"><strong>{{ event.name }}</strong></h5>
+                <h7 class="card-text mt-1">{{ event.duration }}</h7>
             </div>
-
+            <p class="card-text">{{ event.description }}</p>
+                  <div class="container-fluid text-center">
+                      <br>
+                      <div class="btn-group btn-group" role="group" aria-label="navigation">
+                        <form method="post" action="{% url 'ubertravel:prev_event' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-light-nav equalwidth">&#8249; Previous</button>
+                        </form>
+                        <form method="post" action="{% url 'ubertravel:next_event' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-light-nav equalwidth">Next &#8250;</button>
+                        </form>
+                        </div>
+                      <button type="button" class="btn btn-secondary btn-lg btn-block pt-1" data-toggle="modal" data-target="#exampleModal"><strong>Start Trip!</strong></button>
+                    </div>
+                </div>
+        </div>
 </body>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Uber arriving in 10min</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Pick-up location: Attraction entrance
+      </div>
+      <div class="modal-footer" style="align: center">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!--JS Stuff-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

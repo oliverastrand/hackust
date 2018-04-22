@@ -14,5 +14,6 @@ urlpatterns = [
     path('choose_city/', views.choose_city, name='choose_city'),
     path('itinerary/', views.itinerary, name='itinerary'),
     path('detail/', views.detail, name='detail'),
-    #path('settings/', login_required(views.settings), name='settings'),
+    path('prev_event/', views.prev_event, name='prev_event'),
+    path('next_event/', views.next_event, name='next_event'),
 ]

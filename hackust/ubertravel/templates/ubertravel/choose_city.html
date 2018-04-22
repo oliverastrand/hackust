@@ -1,7 +1,6 @@
 {% load static %}
 
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +9,7 @@
     <link href="{% static 'ubertravel/bootstrap.css' %}" rel="stylesheet">
     <link href="{% static 'ubertravel/ownStyles.css' %}" rel="stylesheet">
 
-    <title>TravelBois</title>
+    <title>Choose City</title>
 </head>
 
 <body>
@@ -24,13 +23,13 @@
             <div class="collapse navbar-collapse"  style="color:black" id="navbarTogglerDemo03">
               <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link"  style="color:black" href="#">Lukas</a>
+                  <a class="nav-link"  style="color:black" href="#">About</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link"  style="color: black" href="#">Oliver</a>
+                  <a class="nav-link"  style="color: black" href="#">Help</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"  style="color:black" href="#">Joseph</a>
+                    <a class="nav-link"  style="color:black" href="#">Settings</a>
                 </li>
               </ul>
             </div>
@@ -38,12 +37,15 @@
     </div>
 
     <div class="container centering">
-        <form action="{% url 'ubertravel:choose_city' %}" method="POST">
+        <form action="{% url 'ubertravel:choose_city' %}" method="POST" style="text-align: center">
             {% csrf_token %}
-            <div class="form-group centered w-100" align="center">
+            <div class="form-control form-group centered form-control-lg" style="text-align: center">
+                <span class="align-middle">
                 {{ form }}
-                <button class="btn btn-secondary mt-2" type="submit">Take me there!</button>
-                <br>
+                </span>
+            </div>
+            <div align="center">
+                <button class="btn btn-dark-submit w-75 h-20" type="submit">Take me there!</button>
             </div>
         </form>
     </div>

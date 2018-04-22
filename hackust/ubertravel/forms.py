@@ -1,26 +1,9 @@
 from django import forms
-from .models import Event
+from .models import Event, Attraction, Restaurant
 
 class CityForm(forms.Form):
     city = forms.CharField(label="", max_length=50, required=True,
                            widget=forms.TextInput(attrs={'placeholder': 'City to explore...'}))
-
-def itinerary_form_generator(events):
-    EVENT_CHOICES = (
-        (1, ("Neutral")),
-        (2, ("Like")),
-        (3, ("Dislike")),
-    )
-
-    class ItineraryForm(forms.Form):
-        def __init__(self):
-            super(ItineraryForm, self).__init__()
-            for event in events:
-                self.fields[event.name] = forms.ChoiceField(choices=EVENT_CHOICES, label=event.name, initial='')
-
-
-    return ItineraryForm
-
 
 class ItineraryForm(forms.Form):
     EVENT_CHOICES = (
@@ -31,6 +14,22 @@ class ItineraryForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         events = kwargs.pop('events')
+        times = kwargs.pop("times")
         super(ItineraryForm, self).__init__(*args, **kwargs)
-        for event in events:
-            self.fields[event.name] = forms.ChoiceField(choices=self.EVENT_CHOICES, label=event.name, initial='')
+        '''
+        for i in range(0, len(events)):
+            event = events[i]
+            if isinstance(event, Attraction):
+                self.fields[event.name] = forms.ChoiceField(choices=self.EVENT_CHOICES, label=event.name, initial='',
+                                                        attrs={"name": event.name, "description": event.description,
+                                                               "time": times[i]})
+            elif event is Restaurant:
+                self.fields[event.name] = forms.ChoiceField(choices=self.EVENT_CHOICES, label=event.name, initial='',
+                                                            attrs={"name": event.name, "price": event.price,
+                                                                   "time": times[i], "rating": event.rating})
+            else:
+                print("Här")
+                self.fields[event.name] = forms.ChoiceField(choices=self.EVENT_CHOICES, label=event.name, initial='',
+                                                            attrs={"name": event.name, "description": event.description,
+                                                                   "time": times[i]})
+        '''
