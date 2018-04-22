@@ -1,5 +1,5 @@
-from ItineraryCreation.Node import Node
-from hackust.ubertravel.models import TravelTime, Event
+from ItineraryCreation.Node import Node, duration_sum
+from hackust.ubertravel.models import TravelTime, Event, Restaurant
 
 import numpy
 from heapq import heappop, heappush
@@ -10,11 +10,28 @@ def getNodes(city):
     :param city:string, is a string that defines for which city the itinerary is created
     :return: returns an array with all the events available in the city
     """
-    events = Event.objects.get(city=city)
     nodes = list()
+    events = Event.objects.filter(city=city)
+    
+    
     for e in events:
         nodes.append(Node(name=e.name, parent=None, rating=e.rating, path=[], duration=e.duration))
+    
+    restaurants = Restaurant.objects.filter(city="Hong Kong")
+    for n in nodes:
+        for r in restaurants:
+            if n.name == r.name:
+                n.is_restaurant=True
 
+    """nodes.append(Node(name="Start", parent=None, rating=0, path=[], duration=0, adress="Start"))
+    nodes.append(Node(name="Peak", parent=None, rating=10000, path=[], duration=120, adress="Peak"))
+    nodes.append(Node(name="Skyline", parent=None, rating=5000, path=[], duration=30, adress="Skyline"))
+    nodes.append(Node(name="Buddha", parent=None, rating=7500, path=[], duration=240, adress="Buddha"))
+    nodes.append(Node(name="Monestary", parent=None, rating=7500, path=[], duration=60, adress="Monestary"))
+    nodes.append(Node(name="Italian Pizza Place", parent=None, rating=8000, path=[], duration=80, adress="Italian Pizza Place"))
+    nodes.append(Node(name="End", parent=None, rating=0, path=[], duration=0, adress="End"))
+    nodes[len(nodes)-1].is_restaurant=True
+"""
     return numpy.array(nodes)
 
 
@@ -25,7 +42,7 @@ def nodes_to_events(path, city):
     :param city:string, is a string that defines for which city the itinerary is created
     :return: list of events
     """
-    all_events = Event.objects.get(city=city)
+    all_events = Event.objects.filter(city=city)
     events = list()
     for p in path:
         for e in all_events:
@@ -56,7 +73,7 @@ class ItineraryCreator:
         while current_node.name != final_node.name:
             newNodes = current_node.explore_next_level(nodes_available=nodes)
             for n in newNodes:
-                print(1/n.get_utility())
+
                 try:
                     heappush(heap, n)
                 except TypeError:
@@ -65,5 +82,10 @@ class ItineraryCreator:
 
         path = current_node.path
         path.append(current_node)
+
+        self.times_leaving= list()
+
+        for p in path:
+            self.times_leaving.append(self.times_leaving[len(self.imes_leaving)-1]+p.duration+p.duration_to_get_there)
 
         self.events = nodes_to_events(path)

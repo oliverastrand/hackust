@@ -12,12 +12,32 @@ def duration_sum(newPath):
     sum = 0
     for p in newPath:
         sum += p.duration + p.duration_to_get_there
+    return sum
 
+def levenshtein(s1, s2):
+    if len(s1) < len(s2):
+        return levenshtein(s2, s1)
 
+    # len(s1) >= len(s2)
+    if len(s2) == 0:
+        return len(s1)
+
+    previous_row = range(len(s2) + 1)
+    for i, c1 in enumerate(s1):
+        current_row = [i + 1]
+        for j, c2 in enumerate(s2):
+            insertions = previous_row[
+                             j + 1] + 1  # j+1 instead of j since previous_row and current_row are one character longer
+            deletions = current_row[j] + 1  # than s2
+            substitutions = previous_row[j] + (c1 != c2)
+            current_row.append(min(insertions, deletions, substitutions))
+        previous_row = current_row
+
+    return previous_row[-1]
 
 @functools.total_ordering
 class Node:
-    def __init__(self, name, parent, location, rating, path, duration, adress):
+    def __init__(self, name, parent, rating, path, duration, adress):
         """
         :param name:string is the name of the attraction,
         is also the reference to the information pages
@@ -30,7 +50,6 @@ class Node:
         """
         self.name = name
         self.parent = parent
-        self.location = location
         self.rating = rating
         self.path = path
         self.start_time = 540 #minutes == 9 o clock
@@ -38,12 +57,13 @@ class Node:
         self.duration = duration
         self.duration_to_get_there = 0
         self.no_restaurant_yet = True
+        self.is_restaurant = False
         self.adress = adress
 
 
     def get_utility(self):
         if self.parent is not None:
-            return self.rating + self.parent.utility - duration_sum(self.path)
+            return self.rating + self.parent.get_utility() - duration_sum(self.path)
         else: return self.rating
 
     def get_distance_from_parent(self):
@@ -73,6 +93,7 @@ class Node:
                 except ObjectDoesNotExist:
                     travel_time = TravelTime.objects.get(start_place = newNode.adress, end_place=self.adress)
 
+                #travel_time = levenshtein(self.name, newNode.name)
                 newNode.duration_to_get_there = travel_time
                 #add previous restaurant information
                 newNode.no_restaurant_yet = self.no_restaurant_yet
@@ -93,7 +114,7 @@ class Node:
         return self.children
 
     def cpy(self):
-        return Node(self.name, self.parent, self.location, self.rating, self.path)
+        return Node(self.name, self.parent, self.rating, self.path, self.duration, self.adress)
 
     def _is_valid_operand(self, other):
         return (hasattr(other, "get_utility") and
