@@ -1,0 +1,72 @@
+{% load static %}
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+    <link href="{% static 'ubertravel/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'ubertravel/ownStyles.css' %}" rel="stylesheet">
+
+    <title>Itinerary</title>
+</head>
+
+<body>
+<div class="list-group">
+
+    <h1 style="color:white" align="center">{{ city }}</h1>
+    {% for event in events %}
+        {% if event.type == "attraction" %}
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-0 pl-1 pb-0 active border-secondary pr-3" style="background-color:#1C1A23">
+                <div class="d-flex w-100">
+                    <img src="{% static event.img %}" style="width: 75px; height: 80px"/>
+                    <div class="mr-auto p-2">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ event.name }}</h5>
+                            <small class="mt-1">{{ event.duration }}</small>
+                        </div>
+                        <p class="mb-0">{{ event.description }}</p>
+                    </div>
+                </div>
+            </a>
+        {% endif %}
+        {% if event.type == "restaurant" %}
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-0 pl-1 pb-0 active border-secondary pr-3" style="background-color:#1C1A23">
+               <div class="d-flex w-100">
+                    <img src="{% static event.img %}" style="width: 75px; height: 65px"/>
+                    <div class="mr-auto p-2">
+                        <div class="d-flex w-100 mb-1">
+                            <h5 class="mb-1">Lunch: {{ event.name }}</h5>
+                        </div>
+                        <div class="d-flex w-100 justify-content-around">
+                            <h6 class="mb-0">{{ event.description }}</h6>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        {% endif %}
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active bt-2 border-secondary pb-1 pt-2 pr-4" style="background-color:#3B3845">
+            <div class="d-flex w-100 justify-content-between">
+                <p class="mb-1">Uber ride</p>
+                <small>{{ event.uber_time }} min</small>
+            </div>
+        </a>
+    {% endfor %}
+
+</div>
+<div class="text-center container-fluid" style="bottom: 0">
+    <form method="post" action="{% url 'ubertravel:itinerary' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-lg btn-block btn-secondary mt-3" style="font-size: 20px"><strong>Start Trip!</strong></button>
+    </form>
+</div>
+</body>
+
+<!--JS Stuff-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+</html>
