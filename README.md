@@ -1,7 +1,7 @@
 # Hong Kong Hackathon hackUST
 A mobile application created in Django called UberTourism that creates itineraries for tourists for specific cities. This is done by scraping TripAdvisor and using Google Maps API to calculate distances between attractions. Through this we are able to offer recommended full-day itineraries, information about each attraction, and the ability to order Ubers to easily travel between the attractions. 
 
-Note that in the final version on the "phase_one_final" branch that we presented (folder "hackustFinalVersion") the full functionality with TripAdvisor and Google Maps API is not completely implemented due to time constrictions during the Hackathon.
+Note that in the final version that we presented (folder "hackustFinalVersion") the full functionality with TripAdvisor and Google Maps API is not completely implemented due to time constrictions during the Hackathon.
 
 | Choosing city  | Itinerary overview | Attraction details |
 | ------------- | ------------- | -------------- |
